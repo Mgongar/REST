@@ -2,6 +2,7 @@ const bcryptjs= require('bcryptjs');
 
 
 
+
 const {response, request}= require('express');//con esta desestructuración conseguimos que el re. salgan las obciones dentro de la función 
 const Usuario = require('../models/usuario');//La u mayúscula no es obligatoria pero es un estandar
 
@@ -39,7 +40,7 @@ const usuariosGet = async(req=request, res=response)=> {
     const {id}=req.params;
     const { _id,password,google,correo,...resto }=req.body;
 
-    //TODO validar contra base de datos
+    //TODO validar contraseña base de datos
     if ( password ) {
       const salt=bcryptjs.genSaltSync();
       resto.password=bcryptjs.hashSync(password,salt);
@@ -55,8 +56,8 @@ const usuariosGet = async(req=request, res=response)=> {
   //POST
   const usuariosPost=async (req, res)=> {
  
-    const { nombre, correo , password, role} = req.body;
-    const usuario = new Usuario({ nombre, correo , password, role}) ;// AQUÍ SE CREA LA INSTANCIA PERO NO GRABA EL REGISTRO
+    const { nombre, correo , password, rol} = req.body;
+    const usuario = new Usuario({ nombre, correo , password, rol}) ;// AQUÍ SE CREA LA INSTANCIA PERO NO GRABA EL REGISTRO
 
     //Verificar si el correo existe
     
@@ -87,8 +88,6 @@ const usuariosGet = async(req=request, res=response)=> {
     const { id } = req.params;
     //Fisicamente lo borramos
     const usuario= await Usuario.findByIdAndUpdate(id,{estado:false});
-
-
     res.json(usuario);
   }
 
@@ -98,6 +97,6 @@ const usuariosGet = async(req=request, res=response)=> {
     usuariosPut,
     usuariosPost,
     usuariosPatch,
-    usuariosDelete
+    usuariosDelete,
 
 };

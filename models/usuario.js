@@ -37,9 +37,10 @@ const UsuarioSchema= Schema({
 
 
 });
-UsuarioSchema.methods.toJSON = function(){
-    const { __v, password, ...usuario}= this.toObject();
-    //Llamamos concretamente a dos apartados y a través de los puntos englobamos el resto en usuarios 
+UsuarioSchema.methods.toJSON = function(){// CON ESTA FUNCIÓN OCULTAMOS A NIVEL VISUAL LOS CAMPOS QUE SELECCIONAMOS
+    const { __v,password,_id, ...usuario}= this.toObject();
+    usuario.uid = _id;
+    //Llamamos concretamente a dos apartados y a través de los puntos englobamos el resto en usuario
     return usuario;
 }
 
